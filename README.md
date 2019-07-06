@@ -1,1 +1,1 @@
-Vending_Machine_UI
+Vending machine user interface by Java Swing
