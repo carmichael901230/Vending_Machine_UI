@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Scanner;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -19,6 +20,8 @@ public class App {
 	private Color BG_COLOR = new Color(39, 46, 56);
 	
 	private JFrame frmVending;
+	
+	private JPanel indexPanel;
 	private JLabel lbImgSnacks;
 	private JLabel lbImgBeverages;
 	private JPanel snackPanel;
@@ -27,6 +30,7 @@ public class App {
 	private JButton btnSnacks;
 	private JButton btnBeverage;
 	private JPanel btnBeveragePanel;
+	
 
 	/**
 	 * Launch the application.
@@ -37,6 +41,7 @@ public class App {
 				try {
 					App window = new App();
 					window.frmVending.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,55 +62,61 @@ public class App {
 	private void initialize() {	
 		// The base Frame
 		frmVending = new JFrame();
-		frmVending.getContentPane().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		frmVending.getContentPane().setFocusTraversalPolicyProvider(true);
-		frmVending.getContentPane().setFocusCycleRoot(true);
-		frmVending.getContentPane().setBackground(new Color(39, 46, 56));
+		frmVending.setResizable(false);
+		frmVending.setVisible(true);
 		frmVending.setTitle("Vending");
-		frmVending.setBounds(100, 100, 600, 600);
+		frmVending.setBounds(100, 100, 600, 800);
 		frmVending.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmVending.getContentPane().setLayout(null);
+		
+		// index panel
+		indexPanel = new JPanel();
+		indexPanel.setLayout(null);
+		indexPanel.setFocusTraversalPolicyProvider(true);
+		indexPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		indexPanel.setFocusCycleRoot(true);
+		indexPanel.setBackground(BG_COLOR);
+		frmVending.getContentPane().add(indexPanel);		
 		
 		// Top label
 		JLabel lblPleaseSelect = new JLabel("Please select:");
 		lblPleaseSelect.setFont(new Font("Arial Black", Font.PLAIN, 30));
 		lblPleaseSelect.setForeground(Color.ORANGE);
-		lblPleaseSelect.setBounds(32, 63, 251, 48);
-		frmVending.getContentPane().add(lblPleaseSelect);
+		lblPleaseSelect.setBounds(32, 30, 251, 48);
+		indexPanel.add(lblPleaseSelect);
 		
 		// snack image panel
 		snackPanel = new JPanel();
 		snackPanel.setBorder(new LineBorder(Color.DARK_GRAY, 5, true));
 		snackPanel.setBackground(BG_COLOR);
-		snackPanel.setBounds(55, 143, 212, 227);
-		frmVending.getContentPane().add(snackPanel);
+		snackPanel.setBounds(55, 215, 225, 225);
+		indexPanel.add(snackPanel);
 		snackPanel.setLayout(null);
 		// snack image
 		lbImgSnacks = new JLabel("");
-		lbImgSnacks.setBounds(6, 13, 200, 207);
+		lbImgSnacks.setBounds(5, 5, 215, 215);
 		snackPanel.add(lbImgSnacks);
-		lbImgSnacks.setIcon(new ImageIcon(new ImageIcon("D:\\CODE\\Vending_Machine_UI\\img\\snacks.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+		lbImgSnacks.setIcon(new ImageIcon(new ImageIcon(System.getProperty("user.dir")+"\\img\\snacks.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
 		
 		
 		// beverage image panel
 		beveragePanel = new JPanel();
 		beveragePanel.setBorder(new LineBorder(Color.DARK_GRAY, 5, true));
 		beveragePanel.setBackground(BG_COLOR);
-		beveragePanel.setBounds(320, 143, 212, 227);
-		frmVending.getContentPane().add(beveragePanel);
+		beveragePanel.setBounds(315, 215, 225, 225);
+		indexPanel.add(beveragePanel);
 		beveragePanel.setLayout(null);
 		// beverage image
 		lbImgBeverages = new JLabel("");
-		lbImgBeverages.setBounds(6, 13, 200, 207);
+		lbImgBeverages.setBounds(5, 5, 215, 215);
 		beveragePanel.add(lbImgBeverages);
-		lbImgBeverages.setIcon(new ImageIcon(new ImageIcon("D:\\CODE\\Vending_Machine_UI\\img\\beverages.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+		lbImgBeverages.setIcon(new ImageIcon(new ImageIcon(System.getProperty("user.dir")+"\\img\\beverages.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
 		
 		// snack btn panel
 		btnSnacksPanel = new JPanel();
 		btnSnacksPanel.setBackground(BG_COLOR);
 		btnSnacksPanel.setBorder(new LineBorder(Color.ORANGE, 4, true));
-		btnSnacksPanel.setBounds(72, 400, 175, 65);
-		frmVending.getContentPane().add(btnSnacksPanel);
+		btnSnacksPanel.setBounds(80, 531, 175, 65);
+		indexPanel.add(btnSnacksPanel);
 		btnSnacksPanel.setLayout(null);
 		// snack btn
 		btnSnacks = new JButton("SNACKS");
@@ -122,7 +133,9 @@ public class App {
 		btnSnacks.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		// onClick snack btn
 		btnSnacks.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				frmVending.dispose();
+				new Snack();
 			}
 		});
 		// snack btn actions
@@ -146,9 +159,9 @@ public class App {
 		// beverage btn panel
 		btnBeveragePanel = new JPanel();
 		btnBeveragePanel.setBorder(new LineBorder(Color.ORANGE, 4));
-		btnBeveragePanel.setBounds(330, 400, 185, 65);
+		btnBeveragePanel.setBounds(333, 531, 185, 65);
 		btnBeveragePanel.setBackground(BG_COLOR);
-		frmVending.getContentPane().add(btnBeveragePanel);
+		indexPanel.add(btnBeveragePanel);
 		btnBeveragePanel.setLayout(null);
 		// beverage btn
 		btnBeverage = new JButton("BEVERAGES");
@@ -161,7 +174,7 @@ public class App {
 		btnBeverage.setFocusPainted(false);
 		btnBeverage.setContentAreaFilled(false);
 		btnBeverage.setBorderPainted(false);
-		btnBeverage.setBackground(new Color(39, 46, 56));
+		btnBeverage.setBackground(BG_COLOR);
 		// onClick beverage btn
 		btnBeverage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
